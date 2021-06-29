@@ -1,4 +1,6 @@
 
+import numpy as np
+
 def powerset(fullset):
     """
     Generates the power set of `fullset`.
@@ -24,11 +26,44 @@ def powerset(fullset):
         subsets.append(subset)
     return subsets
 
+def _sample_mass_values(n):
+    """
+    Sample `n` random numbers that sum to 1.
+    """
+    w = np.random.rand(n)
+    w = w / np.sum(w)
+    return w
+
+def sample_mass(n, m):
+    """
+    Sample a mass array with `n` non-zero elements that sum to one.
+
+    Parameters
+    ----------
+    n : int
+    The number of non-zero elements.
+
+    m : int
+    The length of the array.
+
+    Returns
+    -------
+    mass : numpy array
+    A numpy array with length `m` and `n` non-zero elements.
+
+    """
+    w = _sample_mass_values(n)
+    mass = np.zeros((m,))
+    idxs = np.random.choice(np.arange(m), n, replace=False)
+    for i, idx in enumerate(idxs):
+        mass[idx] = w[i]
+    return mass
+
 def mass2belief(mass_value):
-    pass
+    raise NotImplemented
 
 def mass2plausibility(mass_value):
-    pass
+    raise NotImplemented
 
 def generate_dataset(powerset, known_mass_elements):
     """
