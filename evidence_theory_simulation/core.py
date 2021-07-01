@@ -1,30 +1,30 @@
 
 import numpy as np
 
-def powerset(fullset):
+def powerset(m):
     """
     Generates the power set of `fullset`.
 
     Parameters
     ----------
-        fullset : list
-        The set of which the powerset is returned.
+    m : int
+    The number of elements in the universal set `X`.
 
     Returns
     -------
-        powerset : list
-        The powerset is a list of lists.
+    powerset : numpy array
+    An boolean array with size :math:`m \\times 2^m` that define whether an
+    element of `X` (on columns) belongs to the element (on rows) of the power
+    set.
 
     """
-    listsub = list(fullset)
-    subsets = []
-    for i in range(2**len(listsub)):
-        subset = []
-        for k in range(len(listsub)):
-            if i & 1 << k:
-                subset.append(listsub[k])
-        subsets.append(subset)
-    return subsets
+    powerset = [np.zeros((m,))]
+    for i in range(m):
+        for j in range(len(powerset)):
+            x = np.copy(powerset[j])
+            x[i] = 1
+            powerset.append(x)
+    return np.stack(powerset)
 
 def _sample_mass_values(n):
     """
@@ -59,13 +59,19 @@ def sample_mass(n, m):
         mass[idx] = w[i]
     return mass
 
-def mass2belief(mass_value):
-    raise NotImplemented
+def mass2belief(mass):
+    """
+    Compute the beliefe value from a mass value.
+    """
+    raise NotImplementedError
 
-def mass2plausibility(mass_value):
-    raise NotImplemented
+def mass2plausibility(mass):
+    """
+    Compute the plausibility value from a mass value.
+    """
+    raise NotImplementedError
 
-def generate_dataset(powerset, known_mass_elements):
+def generate_dataset(powerset, mass):
     """
     Generate a list of dictionaries ready to be transformed into a Pandas
     DataFrame for visualization.
@@ -74,20 +80,20 @@ def generate_dataset(powerset, known_mass_elements):
 
     Parameters
     ----------
-        powerset : list
-        A list of lists representing a powerset.
+    powerset : list
+    A list of lists representing a powerset.
 
-        known_mass_elements : int
-        The number of elements which mass is known.
+    mass : numpy array
+    The number of elements which mass is known.
 
     Returns
     -------
-        data : list
-        A list of dicts containing the powerset elements and the relative
-        values of mass, believe, and plausibility.
+    data : list
+    A list of dicts containing the powerset elements and the relative values
+    of mass, believe, and plausibility.
 
     """
-    pass
+    raise NotImplementedError
 
 if __name__ == "__main__":
     pass
