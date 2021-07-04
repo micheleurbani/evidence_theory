@@ -54,7 +54,7 @@ def sample_mass(n, m):
     """
     w = _sample_mass_values(n)
     mass = np.zeros((m,))
-    idxs = np.random.choice(np.arange(m), n, replace=False)
+    idxs = np.random.choice(np.arange(1, m), n, replace=False)
     for i, idx in enumerate(idxs):
         mass[idx] = w[i]
     return mass
