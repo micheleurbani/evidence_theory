@@ -11,16 +11,11 @@ class TestFunctions(unittest.TestCase):
         self.assertEqual(__version__, '0.1.0')
 
     def test_powerset(self):
-        test_set = [1, 2, 3, 4]
-        power_set = core.powerset(test_set)
-        self.assertEqual(power_set, [[], [1], [2], [1, 2], [3], [1, 3],
-                         [2, 3], [1, 2, 3], [4], [1, 4], [2, 4], [1, 2, 4],
-                         [3, 4], [1, 3, 4], [2, 3, 4], [1, 2, 3, 4]])
+        m = 3
+        ps = core.powerset(m)
+        self.assertEqual(ps.shape[0], 2**m)
 
-    def test_sample_mass(self):
-        n = np.random.randint(1, 10)
-        m = np.random.randint(10, 20)
-        mass = core.sample_mass(n, m)
-        print('n ', n, 'm ', m, mass)
-        self.assertEqual(np.count_nonzero(mass), n)
-        self.assertEqual(np.sum(mass), 1)
+    def test__sample_mass_values(self):
+        n = 4
+        w = core._sample_mass_values(n)
+        self.assertAlmostEqual(np.sum(w), 1)

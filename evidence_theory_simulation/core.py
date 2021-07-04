@@ -30,7 +30,7 @@ def _sample_mass_values(n):
     """
     Sample `n` random numbers that sum to 1.
     """
-    w = np.random.rand(n)
+    w = -np.log(np.random.rand(n))
     w = w / np.sum(w)
     return w
 
