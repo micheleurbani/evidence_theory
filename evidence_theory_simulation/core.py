@@ -75,9 +75,16 @@ def mass2belief(powerset, mass):
 
 def mass2plausibility(powerset, mass):
     """
-    Compute the plausibility value from a mass value.
+    Compute the plausibility values from a mass values.
     """
-    raise NotImplementedError
+    plausibility = np.zeros_like(mass)
+    for i, e1 in enumerate(powerset):
+        m = np.zeros_like(mass)
+        for j, e2 in enumerate(powerset):
+            if np.any(np.multiply(e1, e2)):
+                m[j] = mass[j]
+        plausibility[i] = np.sum(m)
+    return plausibility
 
 def generate_dataset(powerset, mass):
     """
