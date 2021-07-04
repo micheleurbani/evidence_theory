@@ -2,6 +2,7 @@
 import numpy as np
 import pandas as pd
 
+
 def powerset(m):
     """
     Generates the power set of `fullset`.
@@ -27,6 +28,7 @@ def powerset(m):
             powerset.append(x)
     return np.stack(powerset)
 
+
 def _sample_mass_values(n):
     """
     Sample `n` random numbers that sum to 1.
@@ -34,6 +36,7 @@ def _sample_mass_values(n):
     w = -np.log(np.random.rand(n))
     w = w / np.sum(w)
     return w
+
 
 def sample_mass(n, m):
     """
@@ -60,6 +63,7 @@ def sample_mass(n, m):
         mass[idx] = w[i]
     return mass
 
+
 def mass2belief(powerset, mass):
     """
     Compute the belief values from a mass values.
@@ -72,6 +76,7 @@ def mass2belief(powerset, mass):
                 m[j] = mass[j]
         belief[i] = np.sum(m)
     return belief
+
 
 def mass2plausibility(powerset, mass):
     """
@@ -121,6 +126,7 @@ def generate_dataset(powerset, mass):
     df = pd.DataFrame(data)
     return df
 
+
 def hohle(data):
     """
     Computes the Hohle entropy of the powerset.
@@ -133,7 +139,24 @@ def hohle(data):
     """
     #TODO: Ha senso non considerare gli elementi con zero belief? Significato?
     idx = data["belief"] > 0
-    return np.sum(np.multiply(data["mass"][idx], np.log2(1 / data["belief"][idx])))
+    return np.sum(np.multiply(data["mass"][idx], np.log2(1 /
+                  data["belief"][idx])))
+
+
+def yager(data):
+    """
+    Computes the Yager entropy of the powerset.
+
+    Parameters
+    ----------
+    data : pandas DataFrame
+    A `pandas.DataFrame` containing the mass, belief, and plausibility values
+    of the elements of a powerset.
+    """
+    idx = data["plausibility"] > 0
+    return np.sum(np.multiply(data["mass"][idx], np.log2(1 /
+                  data["plausibility"][idx])))
+
 
 if __name__ == "__main__":
     pass

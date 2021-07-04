@@ -43,3 +43,12 @@ class TestFunctions(unittest.TestCase):
         mass = core.sample_mass(n, len(powerset))
         df = core.generate_dataset(powerset, mass)
         ho = core.hohle(df)
+
+    def test_yager(self):
+        m = 4  # number of elements in the X
+        n = 6  # number of focal points
+        assert n <= 2**m
+        powerset = core.powerset(m)
+        mass = core.sample_mass(n, len(powerset))
+        df = core.generate_dataset(powerset, mass)
+        hy = core.yager(df)
