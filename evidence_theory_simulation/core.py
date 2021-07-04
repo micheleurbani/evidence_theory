@@ -86,10 +86,25 @@ def mass2plausibility(powerset, mass):
     for i, e1 in enumerate(powerset):
         m = np.zeros_like(mass)
         for j, e2 in enumerate(powerset):
-            if np.any(np.multiply(e1, e2)):
+            if np.array_equal(np.multiply(e1, e2), e1):
                 m[j] = mass[j]
         plausibility[i] = np.sum(m)
     return plausibility
+
+
+def commonality(powerset, mass):
+    """
+    Compute the commonality measure.
+    """
+    commonality = np.zeros_like(mass)
+    for i, e1 in enumerate(powerset):
+        m = np.zeros_like(mass)
+        for j, e2 in enumerate(powerset):
+            if np.array_equal(np.multiply(e1, e2), e2):
+                m[j] = mass[j]
+        commonality = np.sum(m)
+    return commonality
+
 
 def generate_dataset(powerset, mass):
     """
@@ -117,11 +132,13 @@ def generate_dataset(powerset, mass):
     """
     beliefe = mass2belief(powerset, mass)
     plausibility = mass2plausibility(powerset, mass)
+    comm = commonality(powerset, mass)
     data = {
         "element": [str(i) for i in powerset],
         "mass": mass,
         "belief": beliefe,
         "plausibility": plausibility,
+        "commonality": comm,
     }
     df = pd.DataFrame(data)
     return df
@@ -141,6 +158,19 @@ def hohle(data):
     idx = data["belief"] > 0
     return np.sum(np.multiply(data["mass"][idx], np.log2(1 /
                   data["belief"][idx])))
+
+
+def smets(data):
+    """
+    Computes the Smets entropy of the powerset.
+
+    Parameters
+    ----------
+    data : pandas DataFrame
+    A `pandas.DataFrame` containing the mass, belief, and plausibility values
+    of the elements of a powerset.
+    """
+    return np.sum(np.log2(1 / data["commonality"]))
 
 
 def yager(data):
