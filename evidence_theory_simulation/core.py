@@ -95,17 +95,19 @@ def generate_dataset(powerset, mass):
 
     Parameters
     ----------
-    powerset : list
-    A list of lists representing a powerset.
+    powerset : numpy array
+    An boolean array with size :math:`m \\times 2^m` that define whether an
+    element of `X` (on columns) belongs to the element (on rows) of the power
+    set.
 
     mass : numpy array
     The number of elements which mass is known.
 
     Returns
     -------
-    data : list
-    A list of dicts containing the powerset elements and the relative values
-    of mass, believe, and plausibility.
+    data : pandas DataFrame
+    A `pandas.DataFrame` containing mass, belief, and plausibility values for
+    the elements of the set.
 
     """
     beliefe = mass2belief(powerset, mass)
@@ -113,7 +115,7 @@ def generate_dataset(powerset, mass):
     data = {
         "element": [str(i) for i in powerset],
         "mass": mass,
-        "beliefe": beliefe,
+        "belief": beliefe,
         "plausibility": plausibility,
     }
     df = pd.DataFrame(data)
