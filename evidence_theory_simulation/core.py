@@ -108,7 +108,16 @@ def generate_dataset(powerset, mass):
     of mass, believe, and plausibility.
 
     """
-    raise NotImplementedError
+    beliefe = mass2belief(powerset, mass)
+    plausibility = mass2plausibility(powerset, mass)
+    data = {
+        "element": [str(i) for i in powerset],
+        "mass": mass,
+        "beliefe": beliefe,
+        "plausibility": plausibility,
+    }
+    df = pd.DataFrame(data)
+    return df
 
 if __name__ == "__main__":
     pass

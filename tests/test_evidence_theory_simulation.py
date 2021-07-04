@@ -19,3 +19,18 @@ class TestFunctions(unittest.TestCase):
         n = 4
         w = core._sample_mass_values(n)
         self.assertAlmostEqual(np.sum(w), 1)
+
+    def test_sample_mass(self):
+        n = 4
+        m = 6
+        w = core.sample_mass(n, m)
+        self.assertAlmostEqual(np.sum(w), 1)
+
+    def test_belief_plausibility(self):
+        m = 4
+        n = 3
+        powerset = core.powerset(m)
+        mass = core.sample_mass(n, len(powerset))
+        belief = core.mass2belief(powerset, mass)
+        plausibility = core.mass2plausibility(powerset, mass)
+        self.assertTrue(np.all(belief <= plausibility))
