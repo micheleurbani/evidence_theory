@@ -34,3 +34,12 @@ class TestFunctions(unittest.TestCase):
         belief = core.mass2belief(powerset, mass)
         plausibility = core.mass2plausibility(powerset, mass)
         self.assertTrue(np.all(belief <= plausibility))
+
+    def test_hohle(self):
+        m = 4  # number of elements in the X
+        n = 6  # number of focal points
+        assert n <= 2**m
+        powerset = core.powerset(m)
+        mass = core.sample_mass(n, len(powerset))
+        df = core.generate_dataset(powerset, mass)
+        ho = core.hohle(df)

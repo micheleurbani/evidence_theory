@@ -121,5 +121,19 @@ def generate_dataset(powerset, mass):
     df = pd.DataFrame(data)
     return df
 
+def hohle(data):
+    """
+    Computes the Hohle entropy of the powerset.
+
+    Parameters
+    ----------
+    data : pandas DataFrame
+    A `pandas.DataFrame` containing the mass, belief, and plausibility values
+    of the elements of a powerset.
+    """
+    #TODO: Ha senso non considerare gli elementi con zero belief? Significato?
+    idx = data["belief"] > 0
+    return np.sum(np.multiply(data["mass"][idx], np.log2(1 / data["belief"][idx])))
+
 if __name__ == "__main__":
     pass
