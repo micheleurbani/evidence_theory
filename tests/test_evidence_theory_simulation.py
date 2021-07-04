@@ -51,7 +51,7 @@ class TestFunctions(unittest.TestCase):
         powerset = core.powerset(m)
         mass = core.sample_mass(n, len(powerset))
         df = core.generate_dataset(powerset, mass)
-        ho = core.smets(df)
+        hs = core.smets(df)
 
     def test_yager(self):
         m = 4  # number of elements in the X

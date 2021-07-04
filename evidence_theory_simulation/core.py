@@ -102,7 +102,7 @@ def commonality(powerset, mass):
         for j, e2 in enumerate(powerset):
             if np.array_equal(np.multiply(e1, e2), e2):
                 m[j] = mass[j]
-        commonality = np.sum(m)
+        commonality[i] = np.sum(m)
     return commonality
 
 
@@ -170,7 +170,8 @@ def smets(data):
     A `pandas.DataFrame` containing the mass, belief, and plausibility values
     of the elements of a powerset.
     """
-    return np.sum(np.log2(1 / data["commonality"]))
+    idx = data["commonality"] > 0
+    return np.sum(np.log2(1 / data["commonality"][idx]))
 
 
 def yager(data):
