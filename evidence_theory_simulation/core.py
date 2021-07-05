@@ -72,7 +72,7 @@ def mass2belief(powerset, mass):
     for i, e1 in enumerate(powerset):
         m = np.zeros_like(mass)
         for j, e2 in enumerate(powerset):
-            if np.all(np.multiply(e1, e2)):
+            if np.array_equal(np.multiply(e1, e2), e2):
                 m[j] = mass[j]
         belief[i] = np.sum(m)
     return belief
@@ -86,7 +86,7 @@ def mass2plausibility(powerset, mass):
     for i, e1 in enumerate(powerset):
         m = np.zeros_like(mass)
         for j, e2 in enumerate(powerset):
-            if np.array_equal(np.multiply(e1, e2), e1):
+            if np.any(np.multiply(e1, e2)):
                 m[j] = mass[j]
         plausibility[i] = np.sum(m)
     return plausibility
