@@ -1,5 +1,6 @@
 
 import pandas as pd
+import seaborn as sb
 from evidence_theory_simulation import core
 
 
@@ -45,3 +46,22 @@ def experiment(N, m, n, entropy_measures):
             data[measure.__name__] = measure(d)
         results.append(data)
     return pd.DataFrame(results)
+
+
+def plot_correlation(data):
+    """
+    Returns a grid of scatter plots representing the measure-to-measure
+    comparisons.
+
+    Paramters
+    ---------
+    data : pandas.DataFrame
+    The dataset containing a sample of entropy measures.
+    """
+    fig = sb.pairplot(data)
+    fig.savefig("pairplot.png")
+    return fig
+
+
+if __name__ == "__main__":
+    pass

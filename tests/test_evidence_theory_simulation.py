@@ -93,10 +93,12 @@ class TestExperiment(unittest.TestCase):
         entropy_measures = [
             core.hohle,
             core.smets,
-            yager,
-            nguyen,
-            dubois_prade,
+            core.yager,
+            core.nguyen,
+            core.dubois_prade,
+            core.lamata_moral,
         ]
         results = experiment.experiment(N, m, n, entropy_measures)
         self.assertEqual(results.shape[1], len(entropy_measures))
         self.assertEqual(len(results), N)
+        print(results)
