@@ -1,6 +1,7 @@
 
 import numpy as np
 import pandas as pd
+from ast import literal_eval
 
 
 def powerset(m):
@@ -134,7 +135,7 @@ def generate_dataset(powerset, mass):
     plausibility = mass2plausibility(powerset, mass)
     comm = commonality(powerset, mass)
     data = {
-        "element": [str(i) for i in powerset],
+        "element": [i for i in powerset],
         "mass": mass,
         "belief": beliefe,
         "plausibility": plausibility,
@@ -154,7 +155,6 @@ def hohle(data):
     A `pandas.DataFrame` containing the mass, belief, and plausibility values
     of the elements of a powerset.
     """
-    #TODO: Ha senso non considerare gli elementi con zero belief? Significato?
     idx = data["belief"] > 0
     return np.sum(np.multiply(data["mass"][idx], np.log2(1 /
                   data["belief"][idx])))
@@ -202,6 +202,20 @@ def nguyen(data):
     idx = data["mass"] > 0
     return np.sum(np.multiply(data["mass"][idx], np.log2(1 /
                   data["mass"][idx])))
+
+
+def dubois_prade(data):
+    """
+    Computes the Dubois and Prade entropy of the powerset.
+
+    Parameters
+    ----------
+    data : pandas DataFrame
+    A `pandas.DataFrame` containing the mass, belief, and plausibility values
+    of the elements of a powerset.
+    """
+    cards = np.array([np.sum(i) for i in data["element"]])
+    return np.sum(np.multiply(data["mass"], np.log2(1 / cards)))
 
 
 if __name__ == "__main__":

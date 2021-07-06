@@ -74,6 +74,16 @@ class TestCore(unittest.TestCase):
         hn = core.nguyen(df)
 
 
+    def test_dubois_prade(self):
+        m = 4  # number of elements in the X
+        n = 6  # number of focal points
+        assert n <= 2**m
+        powerset = core.powerset(m)
+        mass = core.sample_mass(n, len(powerset))
+        df = core.generate_dataset(powerset, mass)
+        hdp = core.dubois_prade(df)
+
+
 class TestExperiment(unittest.TestCase):
 
     def test_experiment(self):
@@ -83,6 +93,10 @@ class TestExperiment(unittest.TestCase):
         entropy_measures = [
             core.hohle,
             core.smets,
+            yager,
+            nguyen,
+            dubois_prade,
         ]
         results = experiment.experiment(N, m, n, entropy_measures)
-        print(results)
+        self.assertEqual(results.shape[1], len(entropy_measures))
+        self.assertEqual(len(results), N)
