@@ -6,19 +6,12 @@ entropy measures that were proposed in the context of Evidence theory.
 
 ## Get started
 
-Create a virtual environment using Poetry (
-[see here how to install](https://python-poetry.org/docs/#installation))
-and initialize the project:
-
-    poetry init
+Install Poetry if you don't have it,
+[see here how to do.](https://python-poetry.org/docs/#installation)
 
 Then, activate the virtual environment with the following command:
 
     poetry run
-
-and install the required dependencies:
-
-    poetry install
 
 Finally, open the Jupyter notebook
 
