@@ -9,8 +9,10 @@ entropy measures that were proposed in the context of Evidence theory.
 Install Poetry if you don't have it,
 [see here how to do.](https://python-poetry.org/docs/#installation)
 
-Then, activate the virtual environment with the following command:
+Then, install the required dependencies and activate the virtual environment
+with the following commands:
 
+    poetry install
     poetry run
 
 Finally, open the Jupyter notebook
