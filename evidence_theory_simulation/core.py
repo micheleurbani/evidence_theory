@@ -189,5 +189,20 @@ def yager(data):
                   data["plausibility"][idx])))
 
 
+def nguyen(data):
+    """
+    Computes the Nguyen entropy of the powerset.
+
+    Parameters
+    ----------
+    data : pandas DataFrame
+    A `pandas.DataFrame` containing the mass, belief, and plausibility values
+    of the elements of a powerset.
+    """
+    idx = data["mass"] > 0
+    return np.sum(np.multiply(data["mass"][idx], np.log2(1 /
+                  data["mass"][idx])))
+
+
 if __name__ == "__main__":
     pass
