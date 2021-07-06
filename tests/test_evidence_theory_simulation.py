@@ -3,9 +3,10 @@ import unittest
 import numpy as np
 from evidence_theory_simulation import __version__
 from evidence_theory_simulation import core
+from evidence_theory_simulation import experiment
 
 
-class TestFunctions(unittest.TestCase):
+class TestCore(unittest.TestCase):
 
     def test_version(self):
         self.assertEqual(__version__, '0.1.0')
@@ -61,3 +62,27 @@ class TestFunctions(unittest.TestCase):
         mass = core.sample_mass(n, len(powerset))
         df = core.generate_dataset(powerset, mass)
         hy = core.yager(df)
+
+
+    def test_yager(self):
+        m = 4  # number of elements in the X
+        n = 6  # number of focal points
+        assert n <= 2**m
+        powerset = core.powerset(m)
+        mass = core.sample_mass(n, len(powerset))
+        df = core.generate_dataset(powerset, mass)
+        hn = core.nguyen(df)
+
+
+class TestExperiment(unittest.TestCase):
+
+    def test_experiment(self):
+        N = 10
+        m = 4
+        n = 6
+        entropy_measures = [
+            core.hohle,
+            core.smets,
+        ]
+        results = experiment.experiment(N, m, n, entropy_measures)
+        print(results)
