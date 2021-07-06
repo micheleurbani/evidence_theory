@@ -215,7 +215,25 @@ def dubois_prade(data):
     of the elements of a powerset.
     """
     cards = np.array([np.sum(i) for i in data["element"]])
-    return np.sum(np.multiply(data["mass"], np.log2(1 / cards)))
+    idx = cards > 0
+    return np.sum(np.multiply(data["mass"][idx], np.log2(1 / cards[idx])))
+
+
+def lamata_moral(data):
+    """
+    Computes the Lamata and Moral entropy of the powerset.
+
+    Parameters
+    ----------
+    data : pandas DataFrame
+    A `pandas.DataFrame` containing the mass, belief, and plausibility values
+    of the elements of a powerset.
+    """
+    return nguyen(data) + dubois_prade(data)
+
+
+def klir_ramer(data):
+    pass
 
 
 if __name__ == "__main__":
